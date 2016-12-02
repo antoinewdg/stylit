@@ -5,6 +5,12 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 
 set(SOURCE_FILES
+        src/utils.h
+        src/patch_distance.h
+        src/quadruplet.h
+        src/quadruplet.cpp
+        src/single_scale_painter.h
+        src/single_scale_painter.cpp
         )
 
 set(TEST_FILES
@@ -15,7 +21,8 @@ include_directories(
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         ${CMAKE_CURRENT_SOURCE_DIR}/lib
         ${CMAKE_CURRENT_SOURCE_DIR}/test
-        ${CMAKE_CURRENT_SOURCE_DIR}/core/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/patch_match/include
+        ${CMAKE_CURRENT_SOURCE_DIR}/patch_match/core/include
 )
 
 
