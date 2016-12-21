@@ -65,6 +65,10 @@ inline Mat_<float> laplacian(Mat_<float> src, int ksize = 3) {
     return laplacian;
 }
 
+inline string _file_root() {
+    return "../files/";
+}
+
 
 inline Mat_<float> load_grayscale(const string &filename) {
     Mat_<float> original, out;

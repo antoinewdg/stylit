@@ -5,9 +5,9 @@ vector<Quadruplet> Quadruplet::get_gaussian_pyramid() {
     auto b_rendered_pyr = _compute_gaussian_pyramid(b_rendered);
     auto a_drawn_pyr = _compute_gaussian_pyramid(a_drawn);
 
-    int k_max = int(std::min(a_rendered_pyr.size(), b_rendered_pyr.size()));
+    int i_max = int(std::min(a_rendered_pyr.size(), b_rendered_pyr.size()));
     vector<Quadruplet> out;
-    for (int i = 0; i < a_rendered_pyr.size(); i++) {
+    for (int i = 0; i < i_max; i++) {
         out.push_back(Quadruplet{
                 a_rendered_pyr[i], b_rendered_pyr[i],
                 a_drawn_pyr[i], Mat_<Vec3b>()
@@ -39,7 +39,7 @@ Mat_<Vec3b> Quadruplet::_load_full_render(string name) {
     for (int i = 0; i < full.rows; i++) {
         for (int j = 0; j < full.cols; j++) {
             for (int c = 0; c < 15; c++) {
-                full(i, j) = lpes[c / 3](i, j)[c % 3];
+                full(i, j)[c] = lpes[c / 3](i, j)[c % 3];
             }
         }
     }

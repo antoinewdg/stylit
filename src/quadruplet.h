@@ -32,9 +32,6 @@ private:
         return pyramid;
     }
 
-    static string _file_root() {
-        return "../files/";
-    }
 };
 
 #endif //STYLIT_STRUCTS_H

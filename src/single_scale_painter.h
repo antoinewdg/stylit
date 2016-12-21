@@ -5,6 +5,9 @@
 #ifndef STYLIT_SINGLE_SCALE_PAINTER_H
 #define STYLIT_SINGLE_SCALE_PAINTER_H
 
+#include <fstream>
+
+#include "logger.h"
 #include "quadruplet.h"
 #include "patch_distance.h"
 
@@ -23,12 +26,14 @@ public:
             OffsetMap, DistanceMap
     > Matcher;
 
-    SingleScalePainter(Quadruplet &q) : m_q(q) {}
+    SingleScalePainter(Quadruplet &q, Logger &logger) : m_q(q), m_logger(logger) {}
 
     void iterate(vector<float> inv_mus) {
         for (float inv_mu : inv_mus) {
             auto nnf = _build_nnf(inv_mu);
             _build_b_from_nnf(nnf);
+            m_logger.log_image(m_q.b_drawn);
+            m_logger.next_iter();
         }
     }
 
@@ -41,6 +46,7 @@ private:
 
 
     Quadruplet &m_q;
+    Logger &m_logger;
 };
 
 #endif //STYLIT_SINGLE_SCALE_PAINTER_H

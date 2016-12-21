@@ -11,9 +11,13 @@ set(SOURCE_FILES
         src/quadruplet.cpp
         src/single_scale_painter.h
         src/single_scale_painter.cpp
+        src/multi_scale_painter.h
+        src/multi_scale_painter.cpp
+        src/logger.h
         )
 
 set(TEST_FILES
+        test/test_experiments.cpp
         )
 
 
@@ -36,9 +40,10 @@ FIND_PACKAGE(OpenCV 3.1 REQUIRED)
 INCLUDE_DIRECTORIES(${OpenCV_INCLUDE_DIRS})
 set(TARGET_LIBS ${TARGET_LIBS} ${OpenCV_LIBS})
 
-find_package(Boost 1.36.0 REQUIRED)
+find_package(Boost 1.36.0 COMPONENTS filesystem system)
 if (Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
+    set(TARGET_LIBS ${TARGET_LIBS} ${Boost_LIBRARIES})
 endif ()
 
 
