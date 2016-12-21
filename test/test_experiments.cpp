@@ -12,7 +12,7 @@ vector<string> styles = {
         "victor", "fragments", "orange_aqua"
 };
 
-TEST_CASE("Experiments") {
+TEST_CASE("Experiments", "[exp]") {
     for (auto t : targets) {
         for (auto s : styles) {
             Quadruplet q = Quadruplet::from_files(s, t);

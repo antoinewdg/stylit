@@ -14,10 +14,12 @@ set(SOURCE_FILES
         src/multi_scale_painter.h
         src/multi_scale_painter.cpp
         src/logger.h
+        src/regression.h
         )
 
 set(TEST_FILES
         test/test_experiments.cpp
+        test/test_regression.cpp
         )
 
 
