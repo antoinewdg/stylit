@@ -15,6 +15,6 @@ struct CenterOnly {
     }
 };
 
-typedef pm::opencv::MaskedPatches<CenterOnly> PatchServer;
+typedef pm::opencv::MaskedPatches<CenterOnly> RestrictedPatchServer;
 
 #endif //STYLIT_PATCH_SERVER_H

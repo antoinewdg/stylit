@@ -24,9 +24,11 @@ private:
     template<class T>
     static vector<Mat_<T>> _compute_gaussian_pyramid(Mat_<T> m) {
         vector<Mat_<T>> pyramid = {m};
-        while (std::min(pyramid.back().rows, pyramid.back().cols) >= 2 * P) {
+        int n = 0;
+        while (std::min(pyramid.back().rows, pyramid.back().cols) >= 2 * P && n < 4) {
             pyramid.emplace_back();
             cv::pyrDown(pyramid[pyramid.size() - 2], pyramid.back());
+            n++;
         }
 
         return pyramid;

@@ -10,6 +10,7 @@
 #include "logger.h"
 #include "quadruplet.h"
 #include "patch_distance.h"
+#include "restricted_nnf.h"
 
 #include "patch_match_core/patch_matcher.h"
 #include "patch_match_opencv/adapters.h"
@@ -22,7 +23,7 @@ public:
     typedef pm::opencv::OffsetMap2D OffsetMap;
     typedef pm::opencv::DistanceMap2d<float> DistanceMap;
     typedef pm::core::PatchMatcher<
-            PatchServer, PatchServer, PatchDistance,
+            PatchServer, PatchServer, PatchDistance<false>,
             OffsetMap, DistanceMap
     > Matcher;
 

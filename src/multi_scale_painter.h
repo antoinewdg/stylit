@@ -19,9 +19,9 @@ public:
         for (auto it = pyramid.rbegin(); it != pyramid.rend(); it++) {
             SingleScalePainter painter(*it, m_logger);
             if (it == pyramid.rbegin()) {
-                painter.iterate({0, 0.5, 0.5, 0.5, 0.5});
+                painter.iterate({0, 1.f, 2.f, 4.f, 8.f, 16.f});
             } else {
-                painter.iterate({0.5, 0.5, 0.5, 0.5, 0.5});
+                painter.iterate({0.5f, 1.f, 2.f, 4.f, 8.f, 16.f});
             }
 
             auto jt = it + 1;

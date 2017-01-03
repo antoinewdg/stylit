@@ -5,7 +5,6 @@
 #ifndef STYLIT_LOGGER_H
 #define STYLIT_LOGGER_H
 
-#include <ctime>
 #include <boost/filesystem.hpp>
 
 #include "utils.h"
@@ -14,8 +13,8 @@ namespace fs = boost::filesystem;
 
 class Logger {
 public:
-    Logger(string style, string target) : scale(0), n_iter(0) {
-        root = _file_root() + "out/" + std::to_string(time(0)) + "/" + target + "/" +
+    Logger(string style, string target, time_t t) : scale(0), n_iter(0) {
+        root = _file_root() + "out/" + std::to_string(t) + "/" + target + "/" +
                style + "/";
 
         fs::create_directories(fs::path(root));
