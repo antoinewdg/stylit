@@ -6,7 +6,7 @@
 #define STYLIT_LOGGER_H
 
 #include <boost/filesystem.hpp>
-
+#include <fstream>
 #include "utils.h"
 
 namespace fs = boost::filesystem;
