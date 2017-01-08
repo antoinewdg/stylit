@@ -1,11 +1,11 @@
 #include "quadruplet.h"
 
-vector<Quadruplet> Quadruplet::get_gaussian_pyramid() {
+vector<Quadruplet> Quadruplet::get_gaussian_pyramid(unsigned long size) {
     auto a_rendered_pyr = _compute_gaussian_pyramid(a_rendered);
     auto b_rendered_pyr = _compute_gaussian_pyramid(b_rendered);
     auto a_drawn_pyr = _compute_gaussian_pyramid(a_drawn);
 
-    int i_max = int(std::min(a_rendered_pyr.size(), b_rendered_pyr.size()));
+    int i_max = int(std::min({size, a_rendered_pyr.size(), b_rendered_pyr.size()}));
     vector<Quadruplet> out;
     for (int i = 0; i < i_max; i++) {
         out.push_back(Quadruplet{

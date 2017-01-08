@@ -12,7 +12,7 @@ vector<string> targets = {
 };
 
 vector<string> styles = {
-        "dreamy", "fragments", "victor", "orange_aqua"
+        "paint_noob", "dreamy", "fragments", "victor", "orange_aqua"
 };
 
 TEST_CASE("Experiments", "[exp]") {
@@ -26,11 +26,3 @@ TEST_CASE("Experiments", "[exp]") {
         }
     }
 }
-
-//TEST_CASE("Exp bis", "[exp]") {
-//    Quadruplet q = Quadruplet::from_files("victor", "crow");
-//    auto pyr = q.get_gaussian_pyramid();
-//    RestrictedNNF rn(pyr[3], 0.f);
-//    rn.build_nnf();
-////    rn.perform_step(0.f);
-//}

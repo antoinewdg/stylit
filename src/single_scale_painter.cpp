@@ -39,7 +39,7 @@ Mat_<Vec2i> SingleScalePainter::_build_nnf(float inv_mu) {
 //    for (auto p : b_patches) {
 //        nnf(p) = offset_map(p) + p;
 //    }
-    RestrictedNNF rn(m_q, inv_mu);
+    RestrictedNNF rn(m_q, inv_mu, m_logger);
     return rn.build_nnf();
 //    return nnf;
 

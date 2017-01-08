@@ -8,6 +8,7 @@
 #include <fstream>
 
 #include <boost/iterator/counting_iterator.hpp>
+#include <boost/iterator/transform_iterator.hpp>
 
 #include "patch_match_core/patch_matcher.h"
 #include "patch_match_opencv/adapters.h"
@@ -16,6 +17,7 @@
 #include "patch_distance.h"
 #include "patch_server.h"
 #include "regression.h"
+#include "logger.h"
 
 
 class RestrictedNNF {
@@ -39,14 +41,15 @@ public:
 
     static constexpr int P = 5;
 
-    RestrictedNNF(Quadruplet &q, float inv_mu) :
+    RestrictedNNF(Quadruplet &q, float inv_mu, Logger &logger) :
             m_q(q),
             m_nnf(q.b_rendered.size()),
             m_distance_map(q.b_rendered.size(), std::numeric_limits<float>::max()),
             m_b_patches_mask(q.b_rendered.size(), true),
             m_fixed_patches(0),
             m_reverse_distance(q, inv_mu),
-            m_regular_distance(q, inv_mu) {
+            m_regular_distance(q, inv_mu),
+            m_logger(logger) {
 
     }
 
@@ -106,10 +109,34 @@ public:
             distances.push_back(a);
         }
 
-        auto max_it = distances.begin() + int(0.5f * distances.size());
-        std::nth_element(distances.begin(), max_it, distances.end());
 
-        return *max_it;
+        std::sort(distances.begin(), distances.end());
+
+        auto x_begin = boost::counting_iterator<float>(0.f);
+        auto x_end = boost::counting_iterator<float>(distances.size());
+
+        auto op = [](float x) {
+            return std::log(1.f + x);
+        };
+        auto y_begin = boost::make_transform_iterator(distances.begin(), op);
+        auto y_end = boost::make_transform_iterator(distances.end(), op);
+
+
+        while (*y_begin == 0.f) {
+            x_begin++;
+            y_begin++;
+        }
+
+        auto p = linear_regression(x_begin, x_end, y_begin, y_end);
+
+        auto transform = [&p](float x) {
+            return std::exp(p.first * x + p.second) - 1.f;
+        };
+        float alpha = (transform(distances.size() - 1)) / (distances.size() - 1);
+        float x_max = (unsigned long) ((std::log(alpha / p.first) - p.second) / p.first);
+
+        m_logger.log_distances(distances, p.first, p.second);
+        return std::exp(p.first * x_max + p.second) - 1.f;
     }
 
     void _build_final_nnf() {
@@ -136,6 +163,7 @@ private:
     Mat_<float> m_distance_map;
     Quadruplet &m_q;
     unsigned long m_fixed_patches;
+    Logger &m_logger;
 };
 
 #endif //STYLIT_RESTRICTED_NNF_H
