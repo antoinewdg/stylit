@@ -3,25 +3,20 @@
 void SingleScalePainter::_build_b_from_nnf(const Mat_<Vec2i> &nnf) {
     Mat_<Vec3f> result(m_q.b_rendered.size(), Vec3f(0, 0, 0));
     Mat_<float> weights(m_q.b_rendered.size(), 0.f);
-    for (int i = P / 2; i < result.rows - P / 2; i++) {
-        for (int j = P / 2; j < result.cols - P / 2; j++) {
-            auto q = nnf(i, j);
-            for (int k = -P / 2; k <= P / 2; k++) {
-                for (int l = -P / 2; l <= P / 2; l++) {
-                    result(k + i, l + j) = result(k + i, l + j) + Vec3f(m_q.a_drawn(q + Vec2i(k, l)));
-                    weights(k + i, l + j) += 1.f;
-                }
+    for_each_patch(result, [this, &nnf, &weights, &result](int i, int j){
+        auto q = nnf(i, j);
+        for (int k = -P / 2; k <= P / 2; k++) {
+            for (int l = -P / 2; l <= P / 2; l++) {
+                result(k + i, l + j) = result(k + i, l + j) + Vec3f(m_q.a_drawn(q + Vec2i(k, l)));
+                weights(k + i, l + j) += 1.f;
             }
-
         }
-    }
+    });
 
     m_q.b_drawn = Mat_<Vec3b>(result.size());
-    for (int i = 0; i < result.rows; i++) {
-        for (int j = 0; j < result.cols; j++) {
-            m_q.b_drawn(i, j) = result(i, j) / weights(i, j);
-        }
-    }
+    for_each_pixel(m_q.b_drawn, [&result, &weights](int i, int j, Vec3b &v) {
+        v = result(i, j) / weights(i, j);
+    });
 }
 
 Mat_<Vec2i> SingleScalePainter::_build_nnf(float inv_mu) {
