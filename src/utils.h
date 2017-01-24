@@ -40,8 +40,14 @@ inline string _file_root() {
     return "../files/";
 }
 
-
-
+template<class T, class Func>
+inline void for_each_patch(Mat_<T> &m, Func f) {
+    for (int i = 2; i < m.rows - 2; i++) {
+        for (int j = 2; j < m.cols - 2; j++) {
+            f(i, j);
+        }
+    }
+};
 
 
 #endif //STYLIT_UTIL_H
