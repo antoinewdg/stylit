@@ -5,6 +5,7 @@
 
 #include "multi_scale_painter.h"
 #include "restricted_nnf.h"
+#include "misc.h"
 
 vector<string> targets = {
         "helmet", "shark", "dino",
@@ -12,7 +13,7 @@ vector<string> targets = {
 };
 
 vector<string> styles = {
-        "paint_noob", "dreamy", "fragments", "victor", "orange_aqua"
+        "dreamy", "paint_noob", "fragments", "victor", "orange_aqua"
 };
 
 TEST_CASE("Experiments", "[exp]") {

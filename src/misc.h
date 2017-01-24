@@ -33,4 +33,17 @@ void add_noise(Mat_<T> &a, float sigma) {
     add_noise(a, sigma, RandomGlobals::GENERATOR);
 }
 
+inline Mat_<uchar> get_frame(int rows, int cols) {
+    Mat_<uchar> frame = cv::imread("../files/frame.png", CV_LOAD_IMAGE_GRAYSCALE);
+    Mat_<uchar> result(rows, cols);
+    for (int i = 0; i < rows; i += frame.rows) {
+        for (int j = 0; j < cols; j += frame.cols) {
+            int width = std::min(cols, j + frame.cols) - j;
+            int height = std::min(rows, i + frame.rows) - i;
+            frame(cv::Rect(0, 0, width, height)).copyTo(result(cv::Rect(j, i, width, height)));
+        }
+    }
+    return result;
+}
+
 #endif //STYLIT_MISC_H
