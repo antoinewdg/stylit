@@ -1,3 +1,6 @@
 [submodule "patch_match"]
 	path = patch_match
 	url = git@github.com:antoinewdg/patch-match-opencv.git
+[submodule "cv-utils"]
+	path = cv-utils
+	url = git@github.com:antoinewdg/cv-utils.git
