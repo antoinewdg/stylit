@@ -21,7 +21,7 @@ Quadruplet Quadruplet::from_files(string style_name, string target_name) {
     return Quadruplet{
             _load_full_render(_file_root() + "sphere"),
             _load_full_render(_file_root() + target_name),
-            load_color(_file_root() + "/sphere/" + style_name + ".png"),
+            load_color(_file_root() + "sphere/" + style_name + ".png"),
             Mat_<Vec3b>()
     };
 }
