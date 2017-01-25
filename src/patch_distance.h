@@ -17,7 +17,6 @@ public:
     typedef float output_type;
 
     PatchDistance(Quadruplet &q, float inv_mu) : m_q(q), m_inv_mu(inv_mu) {
-
     }
 
     inline output_type operator()(const left_type &p, const right_type &q) {
@@ -27,8 +26,8 @@ public:
     inline output_type operator()(const left_type &p, const right_type &q, output_type max_d) {
 
         namespace hana = boost::hana;
-
         output_type d(0.f);
+
         for (int i = -P / 2; i <= P / 2; i++) {
             for (int j = -P / 2; j <= P / 2; j++) {
                 Vec2i u = p + Vec2i(i, j);
@@ -41,6 +40,8 @@ public:
                                                m_q.a_drawn(v)[c] - m_q.b_drawn(u)[c]);
                         d += temp * temp * m_inv_mu;
                     }
+
+
                 }
 
 //                std::cout << "v:" << v << " u:" << u << std::endl;
@@ -66,6 +67,17 @@ public:
 
 private:
 
+    Mat_<float> _compute_patch_variance(Mat_<Vec3b> m) {
+        Mat_<float> variance(m.size(), 0);
+        for (int i = P / 2; i < m.rows - 2; i++) {
+            for (int j = 2; j < m.cols - 2; j++) {
+                Rect r(j - 2, i - 2, P, P);
+                cv::Scalar mean = cv::mean(m(r));
+                variance(i, j) = float(cv::norm(m(r) - mean, cv::NORM_L2SQR));
+            }
+        }
+        return variance;
+    }
 
     const Quadruplet &m_q;
     float m_inv_mu;

@@ -24,8 +24,15 @@ public:
         cout << "- processing scale " << 0 << " iter " << 0 << endl;
     }
 
+    inline string int_to_str(int n) {
+        if (n < 10) {
+            return "0" + std::to_string(n);
+        }
+        return std::to_string(n);
+    }
+
     inline string slug() {
-        return std::to_string(scale) + '_' + std::to_string(n_iter);
+        return std::to_string(scale) + "_" + int_to_str(n_iter);
     }
 
     void next_scale() {
@@ -40,6 +47,12 @@ public:
 
     void log_image(Mat_<Vec3b> image) {
         string filename = root + slug() + ".png";
+
+        cv::imwrite(filename, image);
+    }
+
+    void log_image_bad(Mat_<Vec3b> image, int n) {
+        string filename = root + slug() + "_" + int_to_str(n) + ".png";
 
         cv::imwrite(filename, image);
     }

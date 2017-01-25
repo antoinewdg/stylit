@@ -20,9 +20,9 @@ public:
             m_logger.log_sphere(it->a_drawn);
             SingleScalePainter painter(*it, m_logger);
             if (it == pyramid.rbegin()) {
-                painter.iterate({0, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f});
+                painter.iterate({0, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f});
             } else {
-                painter.iterate({0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f});
+                painter.iterate({0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f, 0.5f});
             }
 
             auto jt = it + 1;

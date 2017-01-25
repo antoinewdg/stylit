@@ -17,6 +17,7 @@ set(SOURCE_FILES
         src/regression.h
         src/patch_server.h
         src/restricted_nnf.h
+        src/uniform_nnf.h
         src/misc.h src/misc.cpp
         )
 
