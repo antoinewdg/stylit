@@ -19,7 +19,7 @@ void SingleScalePainter::_build_b_from_nnf(const Mat_<Vec2i> &nnf) {
     });
 }
 
-Mat_<Vec2i> SingleScalePainter::_build_nnf(float inv_mu) {
+std::tuple<Mat_<Vec2i>, Mat_<float>> SingleScalePainter::_build_nnf(float inv_mu) {
     OffsetMap offset_map(m_q.b_rendered.size());
     DistanceMap distance_map(m_q.b_rendered.size());
     PatchServer a_patches(m_q.a_rendered.size(), P);
@@ -35,7 +35,7 @@ Mat_<Vec2i> SingleScalePainter::_build_nnf(float inv_mu) {
         nnf(p) = offset_map(p) + p;
     }
 
-    return nnf;
+    return std::make_tuple(nnf, distance_map.to_mat());
 //    RestrictedNNF rn(m_q, inv_mu, m_logger);
 //    return rn.build_nnf();
 

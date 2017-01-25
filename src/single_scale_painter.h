@@ -31,9 +31,12 @@ public:
 
     void iterate(vector<float> inv_mus) {
         for (float inv_mu : inv_mus) {
-            auto nnf = _build_nnf(inv_mu);
+            Mat_<Vec2i> nnf;
+            Mat_<float> distance_map;
+            std::tie(nnf, distance_map) = _build_nnf(inv_mu);
             _build_b_from_nnf(nnf);
             m_logger.log_image(m_q.b_drawn);
+            m_logger.log_distance_map(distance_map);
             m_logger.next_iter();
         }
     }
@@ -41,7 +44,7 @@ public:
 
 private:
 
-    Mat_<Vec2i> _build_nnf(float inv_mu = 0);
+    std::tuple<Mat_<Vec2i>, Mat_<float>> _build_nnf(float inv_mu = 0);
 
     void _build_b_from_nnf(const Mat_<Vec2i> &nnf);
 

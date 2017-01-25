@@ -19,7 +19,9 @@ public:
 
         fs::create_directories(fs::path(root + "distances"));
 
+        cout << endl << endl << "==========================" << endl;
         cout << "Processing style " << style << " for target " << target << endl;
+        cout << "- processing scale " << 0 << " iter " << 0 << endl;
     }
 
     inline string slug() {
@@ -33,12 +35,28 @@ public:
 
     void next_iter() {
         n_iter++;
+        cout << "- processing scale " << scale << " iter " << n_iter << endl;
     }
 
     void log_image(Mat_<Vec3b> image) {
         string filename = root + slug() + ".png";
 
         cv::imwrite(filename, image);
+    }
+
+    void log_sphere(Mat_<Vec3b> sphere) {
+        string filename = root + "sphere_" + slug() + ".png";
+        cv::imwrite(filename, sphere);
+    }
+
+    void log_distance_map(Mat_<float> d) {
+        Mat_<float> copy(d.size(), 0.f);
+        Rect r(2, 2, d.cols - P + 1, d.rows - P + 1);
+        d(r).copyTo(copy);
+        stretch_histogram(copy);
+        copy *= 255.f;
+        string filename = root + "distances_" + slug() + ".png";
+        cv::imwrite(filename, copy);
     }
 
     void log_distances(const vector<float> &distances, float a, float b) {
