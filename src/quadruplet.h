@@ -9,7 +9,6 @@
 
 #include "utils.h"
 
-constexpr int P = 5;
 
 class Quadruplet {
 public:

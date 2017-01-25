@@ -3,7 +3,7 @@
 void SingleScalePainter::_build_b_from_nnf(const Mat_<Vec2i> &nnf) {
     Mat_<Vec3f> result(m_q.b_rendered.size(), Vec3f(0, 0, 0));
     Mat_<float> weights(m_q.b_rendered.size(), 0.f);
-    for_each_patch(result, [this, &nnf, &weights, &result](int i, int j){
+    for_each_patch<P>(result, [this, &nnf, &weights, &result](int i, int j){
         auto q = nnf(i, j);
         for (int k = -P / 2; k <= P / 2; k++) {
             for (int l = -P / 2; l <= P / 2; l++) {

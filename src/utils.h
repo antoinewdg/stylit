@@ -41,5 +41,6 @@ inline string _file_root() {
 }
 
 
+constexpr int P = 5;
 
 #endif //STYLIT_UTIL_H

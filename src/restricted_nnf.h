@@ -39,7 +39,6 @@ public:
             OffsetMap, DistanceMap
     > RegularMatcher;
 
-    static constexpr int P = 5;
 
     RestrictedNNF(Quadruplet &q, float inv_mu, Logger &logger) :
             m_q(q),
