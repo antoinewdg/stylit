@@ -3,7 +3,7 @@
 void SingleScalePainter::_build_b_from_nnf(const Mat_<Vec2i> &nnf) {
     Mat_<Vec3f> result(m_q.b_rendered.size(), Vec3f(0, 0, 0));
     Mat_<float> weights(m_q.b_rendered.size(), 0.f);
-    for_each_patch<P>(result, [this, &nnf, &weights, &result](int i, int j){
+    for_each_patch<P>(result, [this, &nnf, &weights, &result](int i, int j) {
         auto q = nnf(i, j);
         for (int k = -P / 2; k <= P / 2; k++) {
             for (int l = -P / 2; l <= P / 2; l++) {
@@ -39,4 +39,22 @@ Mat_<Vec2i> SingleScalePainter::_build_nnf(float inv_mu) {
 //    RestrictedNNF rn(m_q, inv_mu, m_logger);
 //    return rn.build_nnf();
 
+}
+
+Mat_<Vec3b> SingleScalePainter::build_wrong_b(const Mat_<Vec2i> &nnf) {
+    Mat_<Vec3b> result(m_q.b_rendered.size(), Vec3b(0, 0, 0));;
+    for_each_patch<P>(result, [this, &result, &nnf](int i, int j) {
+        if (i % P != P / 2 || j % P != P / 2) {
+            return;
+        }
+        auto q = nnf(i, j);
+        for (int k = -P / 2; k <= P / 2; k++) {
+            for (int l = -P / 2; l <= P / 2; l++) {
+                result(k + i, l + j) = m_q.a_drawn(q + Vec2i(k, l));
+            }
+        }
+
+    });
+
+    return result;
 }

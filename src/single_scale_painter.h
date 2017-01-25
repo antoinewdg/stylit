@@ -45,6 +45,8 @@ private:
 
     void _build_b_from_nnf(const Mat_<Vec2i> &nnf);
 
+    Mat_<Vec3b> build_wrong_b(const Mat_<Vec2i> &nnf);
+
 
     Quadruplet &m_q;
     Logger &m_logger;
