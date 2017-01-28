@@ -39,6 +39,7 @@ public:
             std::tie(nnf, distance_map) = _build_nnf(inv_mu);
             _build_b_from_nnf(nnf, distance_map);
 //            m_logger.log_image(build_wrong_b(nnf));
+            m_logger.log_distance_map(distance_map);
             for (int k = 0; k <= 4; k++) {
                 for (int l = 0; l <= 4; l++) {
                     int n = k * 5 + l;
