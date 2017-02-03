@@ -28,14 +28,6 @@ vector<SPair> todo = {
 
 TEST_CASE("Experiments", "[exp]") {
     time_t a = time(0);
-//    for (auto t : targets) {
-//        for (auto s : styles) {
-//            Quadruplet q = Quadruplet::from_files(s, t);
-//            Logger logger(s, t, a);
-//            MultiScalePainter painter(q, logger);
-//            painter.paint();
-//        }
-//    }
 
     for (auto p : todo) {
         Quadruplet q = Quadruplet::from_files(p.second, p.first);
