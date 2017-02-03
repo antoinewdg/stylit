@@ -8,23 +8,40 @@
 #include "misc.h"
 
 vector<string> targets = {
+//        "train", "hat", "duck"
         "helmet", "shark", "dino",
-        "donut", "crow", "giant"
+//        "donut", "crow", "giant"
 };
 
 vector<string> styles = {
-        "dreamy", "paint_noob", "fragments", "victor", "orange_aqua"
+        "dreamy", "orange_aqua", "comics", "pen_gray", "paint_noob",
+        "fragments", "victor",
+};
+
+typedef std::pair<string, string> SPair;
+
+vector<SPair> todo = {
+        SPair("crow","comics"),
+        SPair("dino", "red_green"),
+        SPair("shark", "fragments")
 };
 
 TEST_CASE("Experiments", "[exp]") {
     time_t a = time(0);
-    for (auto t : targets) {
-        for (auto s : styles) {
-            Quadruplet q = Quadruplet::from_files(s, t);
-            Logger logger(s, t, a);
-            MultiScalePainter painter(q, logger);
-            painter.paint();
-        }
+//    for (auto t : targets) {
+//        for (auto s : styles) {
+//            Quadruplet q = Quadruplet::from_files(s, t);
+//            Logger logger(s, t, a);
+//            MultiScalePainter painter(q, logger);
+//            painter.paint();
+//        }
+//    }
+
+    for (auto p : todo) {
+        Quadruplet q = Quadruplet::from_files(p.second, p.first);
+        Logger logger(p.second, p.first, a);
+        MultiScalePainter painter(q, logger);
+        painter.paint();
     }
 }
 

@@ -9,7 +9,6 @@ void SingleScalePainter::_build_b_from_nnf(const Mat_<Vec2i> &nnf, const Mat_<fl
             for (int l = -P / 2; l <= P / 2; l++) {
                 float w = 1.f;
                 result(k + i, l + j) = result(k + i, l + j) + (w * Vec3f(m_q.a_drawn(q + Vec2i(k, l))));
-//                cout << distances(q + Vec2i(k, l)) << " " << std::exp(-distances(q + Vec2i(k, l)));
                 weights(k + i, l + j) += w;
             }
         }
@@ -38,12 +37,8 @@ std::tuple<Mat_<Vec2i>, Mat_<float>> SingleScalePainter::_build_nnf(float inv_mu
 //    }
 //
 //    return std::make_tuple(nnf, distance_map.to_mat());
-//    RestrictedNNF rn(m_q, inv_mu, m_logger);
-//    return rn.build_nnf();
-    UniformNNF unnf(m_q, inv_mu, m_logger);
-    return unnf.build_nnf();
-
-//    return std::make_tuple(Mat_<Vec2i>(), Mat_<float>());
+    RestrictedNNF rn(m_q, inv_mu, m_logger);
+    return rn.build_nnf();
 }
 
 Mat_<Vec3b> SingleScalePainter::build_wrong_b(const Mat_<Vec2i> &nnf, int a, int b) {
