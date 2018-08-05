@@ -9,7 +9,6 @@ mkdir stylit/bin
 cd stylit/bin
 cmake ..
 make
-cd ../
 ./run_tests "Experiments"
 ```
 
